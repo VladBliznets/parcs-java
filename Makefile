@@ -12,4 +12,5 @@ out/QuickSort.jar: out/parcs.jar src/QuickSort.java
 build: out/QuickSort.jar
 
 run: out/QuickSort.jar
-	@cd out && java -cp 'parcs.jar:QuickSort.jar' QuickSort $(WORKERS)
+    @cd out && java -cp 'parcs.jar:QuickSort.jar' QuickSort $(WORKERS) > ../sorted_output.txt
+
