@@ -48,16 +48,16 @@ public class QuickSort implements AM {
             System.exit(1);
         }
         int k = Integer.parseInt(args[0]);
-
+    
         task curtask = new task();
         curtask.addJarFile("QuickSort.jar");
         AMInfo info = new AMInfo(curtask, null);
-
+    
         System.err.println("Reading input...");
         startTimer();
         int[] arr = readInput();
         stopTimer();
-
+    
         System.err.println("Forwarding parts to workers...");
         startTimer();
         channel[] channels = new channel[k];
@@ -71,7 +71,7 @@ public class QuickSort implements AM {
             channels[i] = c;
         }
         stopTimer();
-
+    
         System.err.println("Getting results from workers...");
         startTimer();
         int[][] parts = new int[k][];
@@ -79,22 +79,27 @@ public class QuickSort implements AM {
             parts[i] = (int[]) channels[i].readObject();
         }
         stopTimer();
-
+    
         System.err.println("Merging...");
         startTimer();
         arr = mergeLog(parts);
         stopTimer();
-
+    
         System.err.println("Printing result...");
         startTimer();
-        BufferedWriter writer = new BufferedWriter(new OutputStreamWriter(System.out));
-        for (int i = 0; i <= 99; i++)
-            writer.write(arr[(int) ((long)(arr.length - 1) * i / 99)] + "\n");
-        writer.close();
+        printArray(arr);
         stopTimer();
-
+    
         curtask.end();
     }
+    
+    public static void printArray(int[] arr) {
+        for (int i = 0; i < arr.length; i++) {
+            System.out.print(arr[i] + " ");
+        }
+        System.out.println(); // to move to a new line after printing the array
+    }
+    
 
     public static int[] readInput() {
         Scanner scanner = new Scanner(System.in);
